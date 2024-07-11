@@ -4,6 +4,7 @@ from flasgger import Swagger
 
 from extensions import db, ma
 from resources.user import User
+from resources.users import Users
 
 app = Flask(__name__)
 
@@ -22,6 +23,7 @@ db.init_app(app)
 
 
 api.add_resource(User, '/user')
+api.add_resource(Users, '/users')
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
