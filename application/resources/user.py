@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, make_response
 from flask_restful import Resource
 
 from models.user_model import UserModel
@@ -7,7 +7,7 @@ from schemas.user import UserSchema
 
 
 class User(Resource):
-    def get(self):
+    def get(self, username):
         """
         This in an example that returns Hello World!
         ---
@@ -17,7 +17,9 @@ class User(Resource):
                 examples:
                     application/json: "Hello, World!"
         """
-        return {'message': 'User'}
+        user = UserModel.objects.get(username=username)
+        user_schema = UserSchema()
+        return make_response(user_schema.dump(user))
 
     def post(self):
         """

@@ -1,8 +1,8 @@
-from flask import jsonify
+from flask import Response
 from flask_restful import Resource
 
 from models.user_model import UserModel
-
+from schemas.user import UserSchema
 
 class Users(Resource):
     def get(self):
@@ -15,4 +15,5 @@ class Users(Resource):
                 examples:
                     application/json: "Hello, World!"
         """
-        return jsonify(UserModel.objects())
+        users = UserModel.objects().to_json()
+        return Response(users)

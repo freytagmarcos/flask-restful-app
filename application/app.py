@@ -3,8 +3,7 @@ from flask_restful import Resource, Api
 from flasgger import Swagger
 
 from extensions import db, ma
-from resources.user import User
-from resources.users import Users
+from routes import initialize_routes
 
 app = Flask(__name__)
 
@@ -20,10 +19,7 @@ api = Api(app)
 swagger = Swagger(app)
 
 db.init_app(app)
-
-
-api.add_resource(User, '/user')
-api.add_resource(Users, '/users')
+initialize_routes(api)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
