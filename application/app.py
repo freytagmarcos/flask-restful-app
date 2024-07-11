@@ -3,8 +3,7 @@ from flask_restful import Resource, Api
 from flasgger import Swagger
 
 from extensions import db, ma
-from schemas.user import UserSchema
-from models.user_model import UserModel
+from resources.user import User
 
 app = Flask(__name__)
 
@@ -21,35 +20,6 @@ swagger = Swagger(app)
 
 db.init_app(app)
 
-
-user_schema = UserSchema()
-
-class User(Resource):
-    def get(self):
-        """
-        This in an example that returns Hello World!
-        ---
-        responses:
-            200:
-                description: A successful response
-                examples:
-                    application/json: "Hello, World!"
-        """
-        return {'message': 'User'}
-
-    def post(self):
-        """
-        Insere um usuário
-        ---
-        responses:
-            200:
-                description: A successful response
-                examples:
-                    application/json: "Hello, World!"
-        """
-        data = user_schema.load(request.json)
-        user = UserModel(**data)
-        user.save()
 
 api.add_resource(User, '/user')
 
