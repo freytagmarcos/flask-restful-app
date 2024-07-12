@@ -1,4 +1,4 @@
-from flask import Response
+from flask import Response, make_response
 from flask_restful import Resource
 
 from models.user_model import UserModel
@@ -15,5 +15,8 @@ class Users(Resource):
                 examples:
                     application/json: "Hello, World!"
         """
-        users = UserModel.objects().to_json()
-        return Response(users)
+        try:
+            users = UserModel.objects().to_json()
+            return Response(users)
+        except Exception as e:
+            return ("Internal Server Error", 500)
