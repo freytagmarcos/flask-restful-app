@@ -1,14 +1,14 @@
 #--- loadbalancing/main.tf ---
 
-resource "aws_lb" "mtc_alb" {
+resource "aws_lb" "alb" {
   name = var.alb_name
   subnets = var.public_subnets
   security_groups = [var.security_groups]
   idle_timeout = 400
 }
 
-resource "aws_alb_target_group" "mtc_tg" {
-  name = "mtc-lb-tg-${substr(uuid(), 0 , 3)}"
+resource "aws_alb_target_group" "target_group" {
+  name = "lb-tg-${substr(uuid(), 0 , 3)}"
   port = var.tg_port
   protocol = var.tg_protocol
   vpc_id = var.vpc_id
@@ -24,12 +24,12 @@ resource "aws_alb_target_group" "mtc_tg" {
   }
 }
 
-resource "aws_lb_listener" "mtc_lb_listener" {
-  load_balancer_arn = aws_lb.mtc_alb.arn
+resource "aws_lb_listener" "lb_listener" {
+  load_balancer_arn = aws_lb.alb.arn
   port = var.listener_port
   protocol = var.listener_protocol
   default_action {
     type = "forward"
-    target_group_arn = aws_alb_target_group.mtc_tg.arn
+    target_group_arn = aws_alb_target_group.target_group.arn
   }
 }

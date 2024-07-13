@@ -2,7 +2,7 @@
 
 data "aws_availability_zones" "available" {}
 
-resource "random_shuffle" "public_az" {
+resource "random_shuffle" "az_list" {
   input        = data.aws_availability_zones.available.names
   result_count = var.max_subnets
 }
@@ -13,7 +13,7 @@ resource "aws_vpc" "vpc" {
    enable_dns_support = true
 
    tags = {
-
+      Name = "aws_vpc"
    }
 }
 
@@ -57,9 +57,9 @@ resource "aws_route_table" "public_rt" {
 }
 
 resource "aws_route" "default_route" {
-  route_table_id         = aws_route_table.mtc_public_rt.id
+  route_table_id         = aws_route_table.public_rt.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.mtc_igw.id
+  gateway_id             = aws_internet_gateway.igw.id
 }
 
 resource "aws_route_table_association" "rt_association" {

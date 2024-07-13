@@ -2,7 +2,7 @@
 
 # criação de policy e roles
 resource "aws_iam_role" "ecs_task_execution_role" {
-    name = var.iamrole_name
+    name = "${var.app_name}-role"
     assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role.json
 }
 
@@ -13,73 +13,57 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {
 
 #Log Group
 resource "aws_cloudwatch_log_group" "log_group" {
-    name = "/ecs/${var.cluster_name}"
+    name = "/ecs/${var.app_name}"
 }
 
 #ECS
 resource "aws_ecs_cluster" "cluster_ecs" {
-    name = var.cluster_name
+    name = "${var.app_name}-cluster"
     tags = {
     }
 }
 
-resource "aws_ecs_task_definition" "webapp" {
-    family = "webapp"
+resource "aws_ecs_task_definition" "task_definition" {
+    family = "${var.app_name}-service"
     execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-    container_definitions = <<EOF
-    [
+    container_definitions = jsonencode([
         {
-            "name": "webapp",
-            "image": "${var.container_image}",
-            "portMappings": [
+            name = "${var.app_name}-container"
+            image = var.container_image
+            cpu = 256
+            memory = 512
+            essential = true
+            portMappings = [
                 {
-                    "containerPort": 8000,
-                    "hostPort": 8000
-                }
-            ],
-            "environment": [
-
-            ],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-region": "us-east-1",
-                    "awslogs-group": "/ecs/webapp",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            }
+                    containerPort = var.app_port
+                    hostPort = var.app_port
+                    protocol = "tcp"
+                }    
+            ]
+            environment = var.env_vars
         }
-    ]
-    EOF
-
-    cpu = 512
-    memory = 1024
+    ])
+    cpu = 256
+    memory = 512
     requires_compatibilities = [ "FARGATE" ]
     network_mode = "awsvpc"
-    tags = {
-        Ambiente = "Medcloud-challenge"
-    }
 }
 
 
-resource "aws_ecs_service" "ecs-webapp" {
-    name = "ecs-webapp"
-    task_definition = aws_ecs_task_definition.webapp.arn 
+resource "aws_ecs_service" "ecs_service" {
+    name = "${var.app_name}-service"
+    task_definition = aws_ecs_task_definition.task_definition.arn 
     cluster = aws_ecs_cluster.cluster_ecs.id
     launch_type = "FARGATE"
     desired_count = 1
     network_configuration {
         assign_public_ip = true
-        security_groups = [aws_security_group.sg-ecs.id]
-        subnets = [ aws_subnet.public-subnet[0].id, aws_subnet.public-subnet[1].id ]
+        security_groups = var.security_group
+        subnets = var.subnet_ids
     }
     load_balancer {
-        target_group_arn = aws_lb_target_group.webapp.arn
-        container_name = "webapp"
-        container_port = "8000"
-    }
-    tags = {
-        Ambiente = "Medcloud-challenge"
+        target_group_arn = var.target_group_arn
+        container_name = "${var.app_name}-container"
+        container_port = "${var.app_port}"
     }
 }
