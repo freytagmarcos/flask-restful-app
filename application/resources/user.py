@@ -49,3 +49,30 @@ class User(Resource):
             return ({"error":"User with given username already exists"}, 400)
         except Exception as e:
             return ("Internal Server Error", 500)
+
+    def patch(self, username):
+        try:
+            user = UserModel.objects.get(username=username)
+        except DoesNotExist:
+            return ({"error": "User with given username doesn't exists"}, 404)
+        
+        try:
+            user_schema = UserSchema(partial=True)
+
+            data = user_schema.load(request.json)
+            user.update(**data)
+            user.save()
+        
+        except Exception as e:
+            return ("Internal Server Error", 500)
+
+    def delete(self, username):
+        try:
+            user = UserModel.objects.get(username=username)
+        except DoesNotExist:
+            return ({"error": "User with given username doesn't exists"}, 404)
+        
+        try:
+            user.delete()
+        except Exception as e:
+            return ("Internal Server Error", 500)
