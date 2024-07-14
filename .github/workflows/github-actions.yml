@@ -3,7 +3,7 @@ name: 'Deploy REST API'
 on:
   push:
     branches: [ "main" ]
-  workflow_dispach:
+  workflow_dispatch:
     inputs:
       APP_VERSION:
         description: 'App Version ex:1.0.0'
