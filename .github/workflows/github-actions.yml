@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: false
-        context: .
+        context: ./application
         file: ./application/Dockerfile
         platforms: linux/arm64
         tags: rest-api-flask:${{ github.event.inputs.app_version }}
