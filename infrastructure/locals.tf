@@ -40,14 +40,6 @@ locals {
     {
       name  = "FLASK_ENV"
       value = "PRD"
-    },
-    {
-      name  = "false_boolean_var"
-      value = false
-    },
-    {
-      name  = "integer_var"
-      value = 42
     }
   ]
 }
