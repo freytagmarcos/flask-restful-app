@@ -29,7 +29,7 @@ jobs:
     - name: Build Docker
       uses: docker/build-push-action@v6
       with:
-        push: false
+        push: true
         context: ./application
         file: ./application/Dockerfile
         platforms: linux/arm64
