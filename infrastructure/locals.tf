@@ -34,12 +34,12 @@ locals {
 locals {
   container_environment = [
     {
-      name  = "string_var"
-      value = "I am a string"
+      name  = "connection_string"
+      value = "${module.mongodbatlas.atlas_cluster_connection_string}"
     },
     {
-      name  = "true_boolean_var"
-      value = true
+      name  = "FLASK_ENV"
+      value = "PRD"
     },
     {
       name  = "false_boolean_var"

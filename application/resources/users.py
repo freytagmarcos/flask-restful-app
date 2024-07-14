@@ -19,4 +19,4 @@ class Users(Resource):
             users = UserModel.objects().to_json()
             return Response(users)
         except Exception as e:
-            return ("Internal Server Error", 500)
+            return ("Internal Server Error", e, 500)
