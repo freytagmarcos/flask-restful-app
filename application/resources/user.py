@@ -10,13 +10,17 @@ from marshmallow.exceptions import ValidationError
 class User(Resource):
     def get(self, username):
         """
-        This in an example that returns Hello World!
+        Esse endpoint retorna os dados de um usuário
         ---
         responses:
             200:
                 description: A successful response
                 examples:
-                    application/json: "Hello, World!"
+                    application/json:
+            404:
+                description: User doesn't exists
+            500:
+                description: Internal Server Error
         """
         try:
             user = UserModel.objects.get(username=username)
@@ -31,18 +35,32 @@ class User(Resource):
         """
         Insere um usuário
         ---
+        post:
+            description: Cria um usuário
+            parameters:
+            - in: body
+              first_name: body
+              required: true
+              schema: 
+                $ref: '#/definitions/User'
         responses:
-            200:
-                description: A successful response
-                examples:
-                    application/json: "Hello, World!"
+            201:
+                description: User created
+                content:
+                    application/json:
+                        status: string
+            400:
+                description: Missing required fields
+                content:
+                    application/json:
+                        status: string
         """
         try:
             user_schema = UserSchema()
             data = user_schema.load(request.json)
             user = UserModel(**data)
             user.save()
-            return '', 200
+            return 'OK', 201
         except (FieldDoesNotExist, ValidationError):
             return ({"error":"Request is missing required fields"}, 400)
         except NotUniqueError:
