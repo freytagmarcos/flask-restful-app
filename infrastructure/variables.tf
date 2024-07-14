@@ -13,7 +13,7 @@ variable "sg_access_ip" {
 
 variable "org_id" {
   type = string
-  default = "teste"
+  default = "66927eceaf94500ac8115c7a"
 }
 
 variable "app_name" {
