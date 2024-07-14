@@ -33,7 +33,7 @@ jobs:
         context: ./application
         file: ./application/Dockerfile
         platforms: linux/arm64
-        tags: rest-api-flask:${{ github.event.inputs.app_version }}
+        tags: localhost:5000/rest-api-flask:${{ github.event.inputs.app_version }}
     
     - name: Push to ECR
       id: ecr
@@ -42,7 +42,7 @@ jobs:
         access-key-id:  ${{ secrets.AWS_ACCESS_KEY }}
         secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         region: us-east-1
-        image: rest-api-flask:${{ github.event.inputs.app_version }}
+        image: localhost:5000/rest-api-flask:${{ github.event.inputs.app_version }}
 
   terraform:
     name: 'Terraform'
