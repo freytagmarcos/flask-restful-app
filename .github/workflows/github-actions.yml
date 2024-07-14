@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
     inputs:
-      APP_VERSION:
+      app_version:
         description: 'App Version ex:1.0.0'
         required: true
         default: 1.0.0
@@ -42,7 +42,7 @@ jobs:
         access-key-id:  ${{ secrets.AWS_ACCESS_KEY }}
         secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         region: us-east-1
-        image: rest-api-flask:$(API_VERSION)
+        image: rest-api-flask:{{ github.event.inputs.app_version }}
 
   terraform:
     name: 'Terraform'
@@ -73,7 +73,7 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-      working-directory: ${{ github.event.inputs.tfpath }}
+      working-directory: ./infrastructure
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -82,10 +82,10 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
-      working-directory: ${{ github.event.inputs.tfpath }}
+      working-directory: ./infrastructure
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+    #- name: Terraform Apply
+      #if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+      #run: terraform apply -auto-approve -input=false
