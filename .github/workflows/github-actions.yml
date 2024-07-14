@@ -8,7 +8,6 @@ on:
       app_version:
         description: 'App Version ex:1.0.0'
         required: true
-        default: 1.0.0
 
 
 permissions:
@@ -33,7 +32,7 @@ jobs:
         context: .
         file: ./application/Dockerfile
         platforms: linux/arm64
-        tags: rest-api-flask:$(API_VERSION)
+        tags: rest-api-flask:{{ github.event.inputs.app_version }}
     
     - name: Push to ECR
       id: ecr
