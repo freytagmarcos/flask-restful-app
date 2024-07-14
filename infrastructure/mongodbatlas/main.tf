@@ -32,10 +32,10 @@ resource "mongodbatlas_advanced_cluster" "atlas_cluster" {
   replication_specs {
     region_configs {
       electable_specs {
-        instance_size = "M0"
+        instance_size = "M0 Sandbox"
       }
       analytics_specs {
-        instance_size = "M0"
+        instance_size = "M0 Sandbox"
       }
       provider_name = "AWS"
       priority      = 7

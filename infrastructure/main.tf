@@ -24,7 +24,7 @@ module "loadbalancing" {
   public_subnets = module.networking.public_subnets
   security_groups = module.networking.alb_security_group[0]
   tg_port = var.app_port
-  tg_protocol = "http"
+  tg_protocol = "HTTP"
   vpc_id = module.networking.vpc_id
   alb_healthy_threshold = 2
   alb_unhealthy_threshold = 2
