@@ -32,9 +32,7 @@ jobs:
         push: false
         context: .
         file: ./application/Dockerfile
-        platforms:
-          - linux/amd64
-          - linux/arm64
+        platforms: linux/arm64
         tags: rest-api-flask:$(API_VERSION)
     
     - name: Push to ECR
