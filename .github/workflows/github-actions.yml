@@ -92,7 +92,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -input=false
+      run: terraform plan -input=false -var app_version=${{ github.event.inputs.app_version }}
       working-directory: ./infrastructure
       env:
         MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
@@ -110,7 +110,7 @@ jobs:
 
     - name: Terraform Destroy
       if: ${{ github.event.inputs.terraform_destroy  == 'true' }}
-      run: terraform destroy -auto-approve -input=false
+      run: terraform destroy -auto-approve -input=false -var app_version=${{ github.event.inputs.app_version }}
       working-directory: ./infrastructure
       env:
         MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
