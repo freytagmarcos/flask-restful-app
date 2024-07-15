@@ -25,21 +25,20 @@ resource "mongodbatlas_project_ip_access_list" "aws_ip" {
   cidr_block = var.cidr_block
 }
 
-resource "mongodbatlas_advanced_cluster" "atlas_cluster" {
+resource "mongodbatlas_cluster" "atlas_cluster" {
   project_id = mongodbatlas_project.atlas_project.id
   name = "${var.atlas_project_name}-cluster"
   cluster_type = "SHARED"
+  provider_instance_size_name = "M0"
+  provider_name = "AWS"
+  provider_region_name = "US_EAST_1"
   replication_specs {
-    region_configs {
-      electable_specs {
-        instance_size = "M0 Sandbox"
-      }
-      analytics_specs {
-        instance_size = "M0 Sandbox"
-      }
-      provider_name = "AWS"
-      priority      = 7
-      region_name   = "US_EAST_1"
+    num_shards = 1
+
+    regions_config {
+      region_name     = "US_EAST_1"
+      electable_nodes = 3
+      priority        = 7
     }
   }
 }
