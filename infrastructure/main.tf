@@ -31,7 +31,7 @@ module "loadbalancing" {
   alb_interval = 30
   alb_timeout = 5
   listener_port = 80
-  listener_protocol = "http"
+  listener_protocol = "HTTP"
 }
 
 module "ecs" {
