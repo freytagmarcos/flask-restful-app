@@ -28,9 +28,10 @@ resource "mongodbatlas_project_ip_access_list" "aws_ip" {
 resource "mongodbatlas_cluster" "atlas_cluster" {
   project_id = mongodbatlas_project.atlas_project.id
   name = "${var.atlas_project_name}-cluster"
-  cluster_type = "SHARED"
+  cluster_type = "REPLICASET"
   provider_instance_size_name = "M0"
-  provider_name = "AWS"
+  provider_name = "TENANT"
+  backing_provider_name = "AWS"
   provider_region_name = "US_EAST_1"
   replication_specs {
     num_shards = 1
