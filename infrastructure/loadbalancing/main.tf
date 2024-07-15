@@ -18,7 +18,7 @@ resource "aws_alb_target_group" "target_group" {
     create_before_destroy = true
   }
   health_check {
-    path = "health"
+    path = "/health"
     healthy_threshold = var.alb_healthy_threshold
     unhealthy_threshold = var.alb_unhealthy_threshold
     timeout = var.alb_timeout
