@@ -12,6 +12,7 @@ resource "aws_alb_target_group" "target_group" {
   port = var.tg_port
   protocol = var.tg_protocol
   vpc_id = var.vpc_id
+  target_type = "ip"
   lifecycle {
     ignore_changes = [ name ]
     create_before_destroy = true
