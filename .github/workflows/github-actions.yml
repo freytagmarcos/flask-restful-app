@@ -11,6 +11,10 @@ on:
         description: 'Skip docker build'
         required: true
         default: 'false'
+      terraform_destroy:
+        description: 'Destroy infra'
+        required: true
+        default: 'false'
 
 
 permissions:
@@ -102,3 +106,13 @@ jobs:
       env:
         MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
         MONGODB_ATLAS_PUBLIC_KEY: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
+
+    - name: Terraform Destroy
+      if: ${{ github.event.inputs.terraform_destroy  == 'true' }}
+      run: terraform destroy -auto-approve -input=false
+      working-directory: ./infrastructure
+      env:
+        MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
+        MONGODB_ATLAS_PUBLIC_KEY: ${{ secrets.MONGODB_ATLAS_PUBLIC_KEY }}
+      
+    
