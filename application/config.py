@@ -20,10 +20,8 @@ class PrdConfig:
     MONGODB_DB = getenv('MONGODB_DB')
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority' % (
+        'host': 'mongodb+srv://%s:%s@rest-api-flask-cluster.q2bzddy.mongodb.net/?retryWrites=true&w=majority&appName=rest-api-flask-cluster' % (
           MONGODB_USER,
-          MONGODB_PASSWORD,
-          MONGODB_HOST,
-          MONGODB_DB
+          MONGODB_PASSWORD
         )
     }

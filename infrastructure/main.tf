@@ -39,7 +39,7 @@ module "ecs" {
   app_name = var.app_name
   app_port = var.app_port
   container_image = "${var.aws_account}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.app_name}:${var.app_version}"
-  security_group = module.networking.alb_security_group
+  security_group = module.networking.ecs_security_group
   subnet_ids = module.networking.public_subnets
   target_group_arn = module.loadbalancing.alb_target_group_arn
   env_vars = local.container_environment
