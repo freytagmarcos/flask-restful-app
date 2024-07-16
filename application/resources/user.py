@@ -66,7 +66,7 @@ class User(Resource):
         except NotUniqueError:
             return ({"error":"User with given username already exists"}, 400)
         except Exception as e:
-            return ("Internal Server Error", 500)
+            return ("Internal Server Error", e, 500)
 
     def patch(self, username):
         try:
