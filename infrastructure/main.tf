@@ -43,5 +43,5 @@ module "ecs" {
   subnet_ids = module.networking.public_subnets
   target_group_arn = module.loadbalancing.alb_target_group_arn
   env_vars = local.container_environment
-  log_configuration = local.log_configuration
+  aws_region = var.aws_region
 }

@@ -31,6 +31,6 @@ variable "env_vars" {
   }))
 }
 
-variable "log_configuration" {
-
+variable "aws_region" {
+  type = string
 }
