@@ -30,3 +30,7 @@ variable "env_vars" {
     value = string
   }))
 }
+
+variable "aws_region" {
+  type = string
+}

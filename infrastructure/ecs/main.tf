@@ -32,6 +32,7 @@ resource "aws_ecs_task_definition" "task_definition" {
             image = var.container_image
             cpu = 256
             memory = 512
+            cpuArchitecture = "arm64"
             essential = true
             portMappings = [
                 {
@@ -41,6 +42,19 @@ resource "aws_ecs_task_definition" "task_definition" {
                 }    
             ]
             environment = var.env_vars
+            logConfiguration = [
+                {
+                    logDriver = "awslogs"
+                    options = [
+                        {
+                            awslogs-create-group = "true"
+                            awslogs-region = var.aws_region
+                            awslogs-group = "/ecs/${var.app_name}-container"
+                            awslogs-stream-prefix = "ecs"
+                        }
+                    ]
+                }
+            ]
         }
     ])
     cpu = 256
