@@ -32,7 +32,6 @@ resource "aws_ecs_task_definition" "task_definition" {
             image = var.container_image
             cpu = 256
             memory = 512
-            cpuArchitecture = "arm64"
             essential = true
             portMappings = [
                 {
@@ -57,6 +56,10 @@ resource "aws_ecs_task_definition" "task_definition" {
     memory = 512
     requires_compatibilities = [ "FARGATE" ]
     network_mode = "awsvpc"
+    runtime_platform {
+      cpu_architecture = "x64_86"
+      operating_system_family = "Linux"
+    }
 }
 
 
