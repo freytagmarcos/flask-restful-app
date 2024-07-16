@@ -28,5 +28,5 @@ variable "app_port" {
 
 variable "app_version" {
   type = string
-  default = "latest"
+  default = "1.0.2"
 }
