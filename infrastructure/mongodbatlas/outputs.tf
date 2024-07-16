@@ -1,5 +1,5 @@
 output "atlas_cluster_connection_string" { 
-        value = mongodbatlas_cluster.atlas_cluster.connection_strings.0.standard_srv 
+        value = mongodbatlas_cluster.atlas_cluster.mongo_uri 
     }
 output "atlas_cluster_username" {
         value = mongodbatlas_database_user.db_user.username

@@ -58,7 +58,7 @@ resource "aws_ecs_task_definition" "task_definition" {
     network_mode = "awsvpc"
     runtime_platform {
       cpu_architecture = "x64_86"
-      operating_system_family = "Linux"
+      operating_system_family = "LINUX"
     }
 }
 

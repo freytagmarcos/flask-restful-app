@@ -20,7 +20,7 @@ class PrdConfig:
     MONGODB_DB = getenv('MONGODB_DB')
 
     MONGODB_SETTINGS = {
-        'host': '%s:%s@%s/%s?retryWrites=true&w=majority' % (
+        'host': 'mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority' % (
           MONGODB_USER,
           MONGODB_PASSWORD,
           MONGODB_HOST,
