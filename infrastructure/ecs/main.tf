@@ -57,7 +57,7 @@ resource "aws_ecs_task_definition" "task_definition" {
     requires_compatibilities = [ "FARGATE" ]
     network_mode = "awsvpc"
     runtime_platform {
-      cpu_architecture = "x64_86"
+      cpu_architecture = "X86_64"
       operating_system_family = "LINUX"
     }
 }
