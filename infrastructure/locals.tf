@@ -59,12 +59,12 @@ locals {
 locals {
   log_configuration = [
     {
-      logDriver = "awslogs",
+      logDriver = "awslogs"
       options = [
         {
-          awslogs-create-group = "true",
-          awslogs-region = var.aws_region,
-          awslogs-group = "/ecs/${var.app_name}-container",
+          awslogs-create-group = "true"
+          awslogs-region = var.aws_region
+          awslogs-group = "/ecs/${var.app_name}-container"
           awslogs-stream-prefix = "ecs"
         }
       ]
