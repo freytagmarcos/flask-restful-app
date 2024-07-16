@@ -34,12 +34,40 @@ locals {
 locals {
   container_environment = [
     {
-      name  = "connection_string"
+      name  = "MONGODB_HOST"
       value = "${module.mongodbatlas.atlas_cluster_connection_string}"
+    },
+    {
+      name = "MONGODB_USER"
+      value = "${module.mongodbatlas.atlas_cluster_username}"
+    },
+    {
+      name = "MONGODB_PASSWORD"
+      value = "${module.mongodbatlas.atlas_cluster_password}"
+    },
+        {
+      name = "MONGODB_DB"
+      value = "${var.app_name}-cluster"
     },
     {
       name  = "FLASK_ENV"
       value = "PRD"
+    }
+  ]
+}
+
+locals {
+  log_configuration = [
+    {
+      logDriver = "awslogs",
+      options = [
+        {
+          awslogs-create-group = "true",
+          awslogs-region = var.aws_region,
+          awslogs-group = "/ecs/${var.app_name}-container",
+          awslogs-stream-prefix = "ecs"
+        }
+      ]
     }
   ]
 }

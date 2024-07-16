@@ -42,19 +42,7 @@ resource "aws_ecs_task_definition" "task_definition" {
                 }    
             ]
             environment = var.env_vars
-            logConfiguration = [
-                {
-                    logDriver = "awslogs"
-                    options = [
-                        {
-                            awslogs-create-group = "true"
-                            awslogs-region = var.aws_region
-                            awslogs-group = "/ecs/${var.app_name}-container"
-                            awslogs-stream-prefix = "ecs"
-                        }
-                    ]
-                }
-            ]
+            logConfiguration = var.log_configuration
         }
     ])
     cpu = 256
@@ -71,7 +59,7 @@ resource "aws_ecs_service" "ecs_service" {
     launch_type = "FARGATE"
     desired_count = 1
     network_configuration {
-        assign_public_ip = true
+        assign_public_ip = false
         security_groups = var.security_group
         subnets = var.subnet_ids
     }

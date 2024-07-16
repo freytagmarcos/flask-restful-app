@@ -31,6 +31,14 @@ variable "env_vars" {
   }))
 }
 
-variable "aws_region" {
-  type = string
+variable "log_configuration" {
+  type = list(object({
+    logDriver = string
+    options = object({
+      awslogs-create-group = string
+      awslogs-region = string
+      awslogs-group = string
+      awslogs-stream-prefix = string
+    })
+  }))
 }
