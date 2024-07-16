@@ -112,7 +112,7 @@ jobs:
 
     - name: Terraform Destroy
       if: ${{ github.event.inputs.terraform_destroy  == 'true' }}
-      run: terraform destroy -auto-approve -input=false -var 
+      run: terraform destroy -auto-approve -input=false
       working-directory: ./infrastructure
       env:
         MONGODB_ATLAS_PRIVATE_KEY: ${{ secrets.MONGODB_ATLAS_PRIVATE_KEY }}
