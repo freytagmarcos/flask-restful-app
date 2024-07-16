@@ -35,7 +35,7 @@ locals {
   container_environment = [
     {
       name  = "MONGODB_HOST"
-      value = "${module.mongodbatlas.atlas_cluster_endpoint}"
+      value = substr(module.mongodbatlas.atlas_cluster_endpoint, 14, length(module.mongodbatlas.atlas_cluster_endpoint))
     },
     {
       name = "MONGODB_USER"
@@ -47,7 +47,7 @@ locals {
     },
         {
       name = "MONGODB_DB"
-      value = "${var.app_name}-cluster"
+      value = "${var.app_name}-db"
     },
     {
       name  = "FLASK_ENV"
