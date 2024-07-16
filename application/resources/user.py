@@ -29,7 +29,7 @@ class User(Resource):
         except DoesNotExist:
             return ({"error": "User with given username doesn't exists"}, 404)
         except Exception as e:
-            return ("Internal Server Error", 500)
+            return ("Internal Server Error", e, 500)
 
     def post(self):
         """
