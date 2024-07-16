@@ -1,4 +1,4 @@
-output "atlas_cluster_connection_string" { 
+output "atlas_cluster_endpoint" { 
         value = mongodbatlas_cluster.atlas_cluster.mongo_uri 
     }
 output "atlas_cluster_username" {
