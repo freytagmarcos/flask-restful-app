@@ -40,7 +40,7 @@ jobs:
         push: false
         context: ./application
         file: ./application/Dockerfile
-        platforms: linux/arm64
+        platforms: linux/amd64
         tags: rest-api-flask:${{ github.event.inputs.app_version }}
         outputs: type=docker
     

@@ -47,7 +47,7 @@ resource "aws_ecs_task_definition" "task_definition" {
                 options = {
                     awslogs-create-group = "true"
                     awslogs-region = var.aws_region
-                    awslogs-group = "/ecs/${var.app_name}-container"
+                    awslogs-group = "/ecs/${var.app_name}"
                     awslogs-stream-prefix = "ecs"
                 }
             }
